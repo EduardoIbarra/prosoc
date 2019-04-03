@@ -1,11 +1,44 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>
-      About
+      Registro
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="afiliado.nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Apellido Paterno</ion-label>
+      <ion-input type="text" [(ngModel)]="afiliado.apellido_paterno"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Apellido Materno</ion-label>
+      <ion-input type="text" [(ngModel)]="afiliado.apellido_materno"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Edad</ion-label>
+      <ion-input type="number" [(ngModel)]="afiliado.edad"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Fecha de Nacimiento</ion-label>
+      <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="afiliado.fecha_nacimiento"></ion-datetime>
+    </ion-item>
+    <ion-label padding>Programas Sociales</ion-label>
+    <ion-item *ngFor="let programa of programas">
+      <ion-label>{{programa.name}}</ion-label>
+      <ion-checkbox [(ngModel)]="programa.selected"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <div #map id="map"></div>
+  <b *ngIf="form?.geolocation">{{form.geolocation.lat}}, {{form.geolocation.lng}}</b>
+  <div>
+    <button ion-button full (click)="save()">Guardar</button>
+    <br />
+    <button ion-button color="secondary" (click)="initAfiliado()" full>Cancelar</button>
+  </div>
 </ion-content>

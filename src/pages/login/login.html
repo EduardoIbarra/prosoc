@@ -1,0 +1,18 @@
+<ion-content padding class="backgroundAmsnImg bposy0">
+  <div class="center" id="mainLogo">
+    <img src="https://seeklogo.com/images/P/partido-movimiento-de-regeneracion-nacional-logo-EEFDE26954-seeklogo.com.png" />
+  </div>
+  <ion-list>
+    <ion-item>
+      <ion-label fixed>Email</ion-label>
+      <ion-input type="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Password</ion-label>
+      <ion-input type="password" [(ngModel)]="password" (keyup.enter)="loginWithEmail()"></ion-input>
+    </ion-item>
+  </ion-list>
+  <div padding>
+    <button *ngIf="operation === 'login'" ion-button  (click)="loginWithEmail()" block>Ingresar</button>
+  </div>
+</ion-content>

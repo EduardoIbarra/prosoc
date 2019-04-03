@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-buttons end>
+      <button ion-button (click)="add()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Afiliados</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="none">
+    <ion-item href="https://morena.si" *ngFor="let afiliado of afiliados | async" (click)="edit(afiliado)">
+      <ion-label>{{afiliado.nombre}} {{afiliado.apellido_paterno}} {{afiliado.apellido_materno}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

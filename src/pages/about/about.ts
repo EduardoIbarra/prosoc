@@ -1,9 +1,19 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import { NavController, NavParams} from 'ionic-angular';
+import {NavController, NavParams, ToastController} from 'ionic-angular';
 import {Afiliado} from "../../models/afiliado.model";
 import {AfiliadosService} from "../../services/afiliados.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import {ProgramasService} from "../../services/programas.service";
+import {
+  GoogleMaps,
+  GoogleMap,
+  GoogleMapsEvent,
+  GoogleMapOptions,
+  CameraPosition,
+  MarkerOptions,
+  Marker,
+  Environment
+} from '@ionic-native/google-maps';
 
 @Component({
   selector: 'page-about',
@@ -26,7 +36,8 @@ export class AboutPage {
               private afiliadosService: AfiliadosService,
               private geolocation: Geolocation,
               public navParams: NavParams,
-              private programasService: ProgramasService
+              private programasService: ProgramasService,
+              private toastController: ToastController
   ) {
     const loggedUser = JSON.parse(window.localStorage.getItem('logged_user'));
     this.adminId = loggedUser && loggedUser.uid;
@@ -39,9 +50,21 @@ export class AboutPage {
     window.setTimeout(() => {
       this.loadMap();
     }, 400)
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.afiliado.geolocation = {lat: resp.coords.latitude, lng: resp.coords.longitude};
+      console.log(resp.coords);
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+
+    let watch = this.geolocation.watchPosition();
+    watch.subscribe((data) => {
+      this.coords = data.coords;
+      console.log(data.coords);
+    });
   }
   loadMap() {
-    /*if (!this.coords) {
+    if (!this.coords) {
       return;
     }
     let mapOptions: GoogleMapOptions = {
@@ -75,12 +98,11 @@ export class AboutPage {
     });
     this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe((data) => {
       marker.setPosition(data[0]);
-      this.form.geolocation = data[0];
-      this.form.geolocation_manual = true;
+      this.afiliado.geolocation = data[0];
       const toast = this.toastController.create({message: 'Ubicación cambiada correctamente', duration: 4000, position: 'bottom'});
-      console.log(this.form);
+      console.log(this.afiliado);
       toast.present();
-    });*/
+    });
   }
   initAfiliado() {
     this.afiliado = {

@@ -6,4 +6,5 @@ export interface Afiliado {
   fecha_nacimiento?: any;
   id?: number;
   programas?: any[];
+  geolocation?: any;
 }
